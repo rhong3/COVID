@@ -21,8 +21,7 @@ class INCEPTION:
         "batch_size": 64,
         "dropout": 0.3,
         "learning_rate": 1E-3,
-        "classes": 2,
-        "sup": False
+        "classes": 2
     }
 
     RESTORE_KEY = "cnn_to_restore"
@@ -82,7 +81,6 @@ class INCEPTION:
         # train or test
         is_train = tf.placeholder_with_default(True, shape=[], name="is_train")
         classes = self.classes
-        sup = self.sup
 
         if model == 'I1':
             import InceptionV1
@@ -183,7 +181,7 @@ class INCEPTION:
                                                    num_classes=classes,
                                                    is_training=is_train,
                                                    dropout_keep_prob=dropout,
-                                                   scope='GoogleNet', supermd=sup)
+                                                   scope='GoogleNet')
             print('Using Default: Inception-V1')
 
         pred = tf.nn.softmax(logits, name="prediction")
