@@ -20,7 +20,7 @@ class INCEPTION:
     DEFAULTS = {
         "batch_size": 64,
         "dropout": 0.3,
-        "learning_rate": 1E-3,
+        "learning_rate": 1E-5,
         "classes": 2
     }
 
@@ -327,7 +327,7 @@ class INCEPTION:
                         except ValueError:
                             mintrain = 0
 
-                        if cost <= mintrain and i > 10:
+                        if cost <= mintrain and i > 5:
                             temp_valid = []
                             for iii in range(5):
                                 x, y = sessa.run(vanext_element)
@@ -359,7 +359,7 @@ class INCEPTION:
                         else:
                             train_cost.append(cost)
 
-                        if i % 10 == 0:
+                        if i % 5 == 0:
                             print("round {} --> loss: ".format(i), cost)
                             temp_valid = []
                             for iii in range(5):

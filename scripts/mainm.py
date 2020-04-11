@@ -37,7 +37,7 @@ INPUT_DIM = [bs, 299, 299, 3]
 HYPERPARAMS = {
     "batch_size": bs,
     "dropout": 0.3,
-    "learning_rate": 1E-4,
+    "learning_rate": 1E-5,
     "classes": classes,
     "sup": False
 }
