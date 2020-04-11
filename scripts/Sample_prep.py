@@ -30,7 +30,7 @@ def set_sep(path, cut=0.3):
     trpd.to_csv(path + '/tr_sample.csv', header=True, index=False)
     vapd.to_csv(path + '/va_sample.csv', header=True, index=False)
 
-    return trpd, vapd, tepd
+    return trpd, tepd, vapd
 
 
 

@@ -228,7 +228,7 @@ class INCEPTION:
                         feed_dict = {self.x_in: x, self.is_train: train_status}
                         fetches = [self.pred, self.net, self.w]
                         pred, net, w = self.sesh.run(fetches, feed_dict)
-                        # ac.CAM(net, w, pred, x, y, dirr, 'Test', bs, pmd, rd)
+                        ac.CAM(net, w, pred, x, y, dirr, 'Test', bs, pmd, rd)
                         net = np.mean(net, axis=(1, 2))
                         if rd == 0:
                             pdx = pred
@@ -254,7 +254,7 @@ class INCEPTION:
                         feed_dict = {self.x_in: x, self.is_train: train_status}
                         fetches = [self.pred, self.net, self.w]
                         pred, net, w = self.sesh.run(fetches, feed_dict)
-                        # ac.CAM_R(net, w, pred, x, dirr, 'Test', bs, rd)
+                        ac.CAM_R(net, w, pred, x, dirr, 'Test', bs, rd)
                         if rd == 0:
                             pdx = pred
                         else:
@@ -386,7 +386,7 @@ class INCEPTION:
                                 saver.save(self.sesh, outfile, global_step=None)
                                 svs = i
 
-                            if i > 200:
+                            if i > 100:
                                 valid_mean_cost = np.mean(validation_cost[-10:-1])
                                 print('Mean validation loss: {}'.format(valid_mean_cost))
                                 if valid_cost > valid_mean_cost:
@@ -460,7 +460,7 @@ class INCEPTION:
                     now = datetime.now().isoformat()[11:]
                     print("------- Training end: {} -------\n".format(now))
 
-                    if svs < 20 and save:
+                    if svs < 15 and save:
                             print("Save the last model as the best model.")
                             outfile = os.path.join(os.path.abspath(outdir),
                                                    "{}_{}".format(self.model, "_".join(['dropout', str(self.dropout)])))
