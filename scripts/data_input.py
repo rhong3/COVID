@@ -53,10 +53,10 @@ class DataSet(object):
 
     # augmentation including onehot encoding
     def augment(self, images, labels):
-        images = tf.image.random_hue(images, 0.3)
-        images = tf.image.random_brightness(images, 0.3)
-        images = tf.image.random_contrast(images, 0.7, 1.3)
-        images = tf.image.random_saturation(images, 0.7, 1.3)
+        images = tf.image.random_hue(images, 0.35)
+        images = tf.image.random_brightness(images, 0.35)
+        images = tf.image.random_contrast(images, 0.5, 1.5)
+        images = tf.image.random_saturation(images, 0.5, 1.5)
 
         labels = tf.one_hot(indices=tf.cast(labels, tf.int32), depth=self._classes)
 
