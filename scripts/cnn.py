@@ -386,7 +386,7 @@ class INCEPTION:
                                 saver.save(self.sesh, outfile, global_step=None)
                                 svs = i
 
-                            if i > 100:
+                            if i > 1000:
                                 valid_mean_cost = np.mean(validation_cost[-10:-1])
                                 print('Mean validation loss: {}'.format(valid_mean_cost))
                                 if valid_cost > valid_mean_cost:
@@ -460,7 +460,7 @@ class INCEPTION:
                     now = datetime.now().isoformat()[11:]
                     print("------- Training end: {} -------\n".format(now))
 
-                    if svs < 15 and save:
+                    if svs < 100 and save:
                             print("Save the last model as the best model.")
                             outfile = os.path.join(os.path.abspath(outdir),
                                                    "{}_{}".format(self.model, "_".join(['dropout', str(self.dropout)])))
