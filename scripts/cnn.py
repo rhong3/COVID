@@ -20,7 +20,7 @@ class INCEPTION:
     DEFAULTS = {
         "batch_size": 64,
         "dropout": 0.3,
-        "learning_rate": 1E-5,
+        "learning_rate": 1E-4,
         "classes": 2
     }
 

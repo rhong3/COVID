@@ -36,7 +36,7 @@ INPUT_DIM = [bs, 299, 299, 3]
 # hyper parameters
 HYPERPARAMS = {
     "batch_size": bs,
-    "dropout": 0.3,
+    "dropout": 0.1,
     "learning_rate": 1E-5,
     "classes": classes,
     "sup": False
