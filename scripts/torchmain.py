@@ -8,15 +8,12 @@ Created on 04/13/2020
 
 import sys
 import os
-import numpy as np
 import pandas as pd
 from PIL import Image
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.autograd import Variable
 from torch.nn import functional as F
-from torch.nn import init
 from torch.utils.data import Dataset, DataLoader
 import torchvision.models as models
 import torchvision.transforms as transforms
@@ -121,6 +118,7 @@ if __name__ == '__main__':
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)
 
+    # train
     for epoch in range(ep):
         train_loss = 0
         train_correct = 0
@@ -146,6 +144,7 @@ if __name__ == '__main__':
             train_loss / len(train_loader.dataset), train_correct, len(train_loader.dataset),
             100.0 * train_correct / len(train_loader.dataset)), flush=True)
 
+        # validation
         val_loss = 0
         correct = 0
         with torch.no_grad():
@@ -165,6 +164,7 @@ if __name__ == '__main__':
                 val_loss / len(val_loader.dataset), correct, len(val_loader.dataset),
                 100.0 * correct / len(val_loader.dataset)), flush=True)
 
+    # test
     test_loss = 0
     correct = 0
     with torch.no_grad():
