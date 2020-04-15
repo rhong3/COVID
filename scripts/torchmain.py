@@ -20,9 +20,9 @@ import torchvision.transforms as transforms
 import numpy as np
 from sklearn.metrics import roc_auc_score, roc_curve, average_precision_score, precision_recall_curve
 import Sample_prep
-import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 modeldict = {'resnet18': models.resnet18(pretrained=True).cuda(),
@@ -128,11 +128,10 @@ if __name__ == '__main__':
         train_correct = 0
         for batch_index, batch_samples in enumerate(train_loader):
             data, target = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda')
-            data = data[:, 0, :, :]
-            data = data[:, None, :, :]
             optimizer.zero_grad()
             output = model(data)
-            loss = nn.CrossEntropyLoss(output, target.long())
+            loss_fn = nn.CrossEntropyLoss()
+            loss = loss_fn(output, target.long())
             train_loss += loss
             optimizer.zero_grad()
             loss.backward()
@@ -159,11 +158,10 @@ if __name__ == '__main__':
             # Predict
             for batch_index, batch_samples in enumerate(val_loader):
                 data, target = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda')
-                data = data[:, 0, :, :]
-                data = data[:, None, :, :]
                 output = model(data)
 
-                loss = nn.CrossEntropyLoss(output, target.long())
+                loss_fn = nn.CrossEntropyLoss()
+                loss = loss_fn(output, target.long())
                 val_loss += loss
                 score = F.softmax(output, dim=1)
                 pred = output.argmax(dim=1, keepdim=True)
@@ -204,11 +202,9 @@ if __name__ == '__main__':
         # Predict
         for batch_index, batch_samples in enumerate(test_loader):
             data, target = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda')
-            data = data[:, 0, :, :]
-            data = data[:, None, :, :]
             output = model(data)
-
-            loss = nn.CrossEntropyLoss(output, target.long())
+            loss_fn = nn.CrossEntropyLoss()
+            loss = loss_fn(output, target.long())
             test_loss += loss
             score = F.softmax(output, dim=1)
             pred = output.argmax(dim=1, keepdim=True)
