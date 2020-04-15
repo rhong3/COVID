@@ -108,7 +108,7 @@ if __name__ == '__main__':
         tes = DataSet(str(data_dir + '/te_sample.csv'), transform=val_transformer)
         vas = DataSet(str(data_dir + '/va_sample.csv'), transform=val_transformer)
     except FileNotFoundError:
-        _, _, _ = Sample_prep.set_sep(path=data_dir)
+        Sample_prep.set_sep(path=data_dir)
         trs = DataSet(str(data_dir + '/tr_sample.csv'), transform=train_transformer)
         tes = DataSet(str(data_dir + '/te_sample.csv'), transform=val_transformer)
         vas = DataSet(str(data_dir + '/va_sample.csv'), transform=val_transformer)
