@@ -24,21 +24,20 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-pt_modeldict = {'resnet18': models.resnet18(pretrained=True).cuda(),
-             'alexnet': models.alexnet(pretrained=True).cuda(),
-             'squeezenet': models.squeezenet1_0(pretrained=True).cuda(),
-             'vgg16': models.vgg16(pretrained=True).cuda(),
-             'densenet': models.densenet161(pretrained=True).cuda(),
-             'inception': models.inception_v3(pretrained=True).cuda(),
-             'googlenet': models.googlenet(pretrained=True).cuda(),
-             'shufflenet': models.shufflenet_v2_x1_0(pretrained=True).cuda(),
-             'mobilenet': models.mobilenet_v2(pretrained=True).cuda(),
-             'resnext50_32x4d': models.resnext50_32x4d(pretrained=True).cuda(),
-             'wide_resnet50_2': models.wide_resnet50_2(pretrained=True).cuda(),
-             'mnasnet': models.mnasnet1_0(pretrained=True).cuda()
-             }
 
-modeldict = {'resnet18': models.resnet18(pretrained=False).cuda(),
+modeldict = {'resnet18_pt': models.resnet18(pretrained=True).cuda(),
+             'alexnet_pt': models.alexnet(pretrained=True).cuda(),
+             'squeezenet_pt': models.squeezenet1_0(pretrained=True).cuda(),
+             'vgg16_pt': models.vgg16(pretrained=True).cuda(),
+             'densenet_pt': models.densenet161(pretrained=True).cuda(),
+             'inception_pt': models.inception_v3(pretrained=True).cuda(),
+             'googlenet_pt': models.googlenet(pretrained=True).cuda(),
+             'shufflenet_pt': models.shufflenet_v2_x1_0(pretrained=True).cuda(),
+             'mobilenet_pt': models.mobilenet_v2(pretrained=True).cuda(),
+             'resnext50_32x4d_pt': models.resnext50_32x4d(pretrained=True).cuda(),
+             'wide_resnet50_2_pt': models.wide_resnet50_2(pretrained=True).cuda(),
+             'mnasnet_pt': models.mnasnet1_0(pretrained=True).cuda(),
+             'resnet18': models.resnet18(pretrained=False).cuda(),
              'alexnet': models.alexnet(pretrained=False).cuda(),
              'squeezenet': models.squeezenet1_0(pretrained=False).cuda(),
              'vgg16': models.vgg16(pretrained=False).cuda(),
@@ -96,15 +95,9 @@ dirr = sys.argv[1]  # output directory
 bs = sys.argv[2]    # batch size
 bs = int(bs)
 md = sys.argv[3]    # model to use
-ptr = sys.argv[4]   # pretrained?
-
-if ptr:
-    print("loading pretrained model...")
-else:
-    modeldict = pt_modeldict
 
 try:
-    ep = sys.argv[5]  # epochs to train
+    ep = sys.argv[4]  # epochs to train
     ep = int(ep)
 except IndexError:
     ep = 3000
