@@ -192,7 +192,7 @@ if __name__ == '__main__':
                 targetlist = np.append(targetlist, targetcpu)
                 patientlist = np.append(patientlist, patient)
                 pathlist = np.append(pathlist, impath)
-            ave_val_loss = val_loss / len(val_loader.dataset)
+            ave_val_loss = val_loss.cpu().numpy() / len(val_loader.dataset)
             losslist = np.append(losslist, ave_val_loss)
 
             if epoch != 0 and ave_val_loss == min(losslist):
@@ -221,15 +221,16 @@ if __name__ == '__main__':
             TN = ((predlist == 0) & (targetlist == 0)).sum()
             FN = ((predlist == 0) & (targetlist == 1)).sum()
             FP = ((predlist == 1) & (targetlist == 0)).sum()
-            print("Per image metrics: ")
+            print("\nPer image metrics: ")
             print('TP=', TP, 'TN=', TN, 'FN=', FN, 'FP=', FP)
             print('TP+FP=', TP + FP)
-            p = TP / (TP + FP)
-            print('precision=', p)
-            p = TP / (TP + FP)
-            r = TP / (TP + FN)
-            print('recall=', r)
-            F1 = 2 * r * p / (r + p)
+            if (TP + FP) != 0:
+                p = TP / (TP + FP)
+                print('precision=', p)
+                p = TP / (TP + FP)
+                r = TP / (TP + FN)
+                print('recall=', r)
+                F1 = 2 * r * p / (r + p)
             acc = (TP + TN) / (TP + TN + FP + FN)
             print('F1=', F1)
             print('acc=', acc)
@@ -248,27 +249,28 @@ if __name__ == '__main__':
             if best_epoch == epoch:
                 joined.to_csv('{}/best_validation_patient.csv'.format(out_dir), index=False)
 
-            print("Per patient metrics: ")
-            TP = joined.loc[joined['prediction'] == 1 & joined['target'] == 1].shape[0]
-            TN = joined.loc[joined['prediction'] == 0 & joined['target'] == 0].shape[0]
-            FN = joined.loc[joined['prediction'] == 0 & joined['target'] == 1].shape[0]
-            FP = joined.loc[joined['prediction'] == 1 & joined['target'] == 0].shape[0]
+            print("\nPer patient metrics: ")
+            TP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 1)].shape[0]
+            TN = joined.loc[(joined['prediction'] == 0) & (joined['target'] == 0)].shape[0]
+            FN = joined.loc[(joined['prediction'] == 0) & (joined['target'] == 1)].shape[0]
+            FP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 0)].shape[0]
             print("Per image metrics: ")
             print('TP=', TP, 'TN=', TN, 'FN=', FN, 'FP=', FP)
             print('TP+FP=', TP + FP)
-            p = TP / (TP + FP)
-            print('precision=', p)
-            p = TP / (TP + FP)
-            r = TP / (TP + FN)
-            print('recall=', r)
-            F1 = 2 * r * p / (r + p)
+            if (TP+FP) != 0:
+                p = TP / (TP + FP)
+                print('precision=', p)
+                p = TP / (TP + FP)
+                r = TP / (TP + FN)
+                print('recall=', r)
+                F1 = 2 * r * p / (r + p)
             acc = (TP + TN) / (TP + TN + FP + FN)
             print('F1=', F1)
             print('acc=', acc)
             AUC = roc_auc_score(joined['target'].tolist(), joined['score'].tolist())
             print('AUC=', AUC)
 
-    print('Best model @ epoch: ', best_epoch)
+    print('\nBest model @ epoch: ', best_epoch)
 
     # test
     test_loss = 0
@@ -299,7 +301,7 @@ if __name__ == '__main__':
             targetlist = np.append(targetlist, targetcpu)
             patientlist = np.append(patientlist, patient)
             pathlist = np.append(pathlist, impath)
-        ave_test_loss = test_loss / len(val_loader.dataset)
+        ave_test_loss = test_loss.cpu().numpy() / len(val_loader.dataset)
         print('\nTest set: Average loss: {:.4f}, Image Accuracy: {}/{} ({:.0f}%)\n'.format(
             ave_test_loss, correct, len(test_loader.dataset),
             100.0 * correct / len(test_loader.dataset)), flush=True)
@@ -319,12 +321,13 @@ if __name__ == '__main__':
         FP = ((predlist == 1) & (targetlist == 0)).sum()
         print('TP=', TP, 'TN=', TN, 'FN=', FN, 'FP=', FP)
         print('TP+FP', TP + FP)
-        p = TP / (TP + FP)
-        print('precision', p)
-        p = TP / (TP + FP)
-        r = TP / (TP + FN)
-        print('recall', r)
-        F1 = 2 * r * p / (r + p)
+        if (TP + FP) != 0:
+            p = TP / (TP + FP)
+            print('precision', p)
+            p = TP / (TP + FP)
+            r = TP / (TP + FN)
+            print('recall', r)
+            F1 = 2 * r * p / (r + p)
         acc = (TP + TN) / (TP + TN + FP + FN)
         print('F1', F1)
         print('acc', acc)
@@ -378,19 +381,20 @@ if __name__ == '__main__':
         joined.to_csv('{}/test_patient.csv'.format(out_dir), index=False)
 
         print("Per patient metrics: ")
-        TP = joined.loc[joined['prediction'] == 1 & joined['target'] == 1].shape[0]
-        TN = joined.loc[joined['prediction'] == 0 & joined['target'] == 0].shape[0]
-        FN = joined.loc[joined['prediction'] == 0 & joined['target'] == 1].shape[0]
-        FP = joined.loc[joined['prediction'] == 1 & joined['target'] == 0].shape[0]
+        TP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 1)].shape[0]
+        TN = joined.loc[(joined['prediction'] == 0) & (joined['target'] == 0)].shape[0]
+        FN = joined.loc[(joined['prediction'] == 0) & (joined['target'] == 1)].shape[0]
+        FP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 0)].shape[0]
         print("Per image metrics: ")
         print('TP=', TP, 'TN=', TN, 'FN=', FN, 'FP=', FP)
         print('TP+FP=', TP + FP)
-        p = TP / (TP + FP)
-        print('precision=', p)
-        p = TP / (TP + FP)
-        r = TP / (TP + FN)
-        print('recall=', r)
-        F1 = 2 * r * p / (r + p)
+        if (TP + FP) != 0:
+            p = TP / (TP + FP)
+            print('precision=', p)
+            p = TP / (TP + FP)
+            r = TP / (TP + FN)
+            print('recall=', r)
+            F1 = 2 * r * p / (r + p)
         acc = (TP + TN) / (TP + TN + FP + FN)
         print('F1=', F1)
         print('acc=', acc)
