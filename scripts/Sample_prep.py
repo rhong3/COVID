@@ -46,16 +46,15 @@ def set_sep(path, cut=0.3):
     train = pd.concat(trlist)
     validation = pd.concat(valist)
 
-    tepd = pd.DataFrame(test.sample(frac=1), columns=['patient', 'label', 'path'])
-    tepd = tepd['path', 'label', 'patient']
+    tepd = pd.DataFrame(test, columns=['patient', 'label', 'path'])
+    tepd = tepd[['path', 'label', 'patient']]
     vapd = pd.DataFrame(validation.sample(frac=1), columns=['patient', 'label', 'path'])
-    vapd = vapd['path', 'label', 'patient']
+    vapd = vapd[['path', 'label', 'patient']]
     trpd = pd.DataFrame(train.sample(frac=1), columns=['patient', 'label', 'path'])
-    trpd = trpd['path', 'label', 'patient']
+    trpd = trpd[['path', 'label', 'patient']]
 
     tepd.to_csv(path + '/te_sample.csv', header=True, index=False)
     trpd.to_csv(path + '/tr_sample.csv', header=True, index=False)
     vapd.to_csv(path + '/va_sample.csv', header=True, index=False)
-
 
 
