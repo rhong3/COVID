@@ -144,6 +144,9 @@ if __name__ == '__main__':
     # train
     best_epoch = -1
     model.train()
+
+    losslist = []
+
     for epoch in range(ep):
         train_loss = 0
         train_correct = 0
@@ -172,7 +175,6 @@ if __name__ == '__main__':
         targetlist = []
         patientlist = []
         pathlist = []
-        losslist = []
         with torch.no_grad():
             # Predict
             for batch_index, batch_samples in enumerate(val_loader):
@@ -198,12 +200,7 @@ if __name__ == '__main__':
             if epoch != 0 and ave_val_loss == min(losslist):
                 best_epoch = epoch
                 print('Temporary best model found @ epoch {}! Saving...'.format(epoch))
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'state_dict': model.state_dict(),
-                    'optimizer': optimizer.state_dict(),
-                }
-                torch.save(checkpoint, '{}/model'.format(METAGRAPH_DIR))
+                torch.save(model, '{}/model.pth'.format(METAGRAPH_DIR))
 
                 best_joined = pd.DataFrame({
                     'prediction': predlist,
@@ -275,8 +272,7 @@ if __name__ == '__main__':
     # test
     test_loss = 0
     correct = 0
-    model = modeldict[md]
-    model.load_state_dict(torch.load('{}/model'.format(METAGRAPH_DIR)))
+    model = torch.load('{}/model.pth'.format(METAGRAPH_DIR))
     model.eval()
     predlist = []
     scorelist = []
