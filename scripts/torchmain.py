@@ -107,7 +107,7 @@ try:
     ep = sys.argv[5]  # epochs to train
     ep = int(ep)
 except IndexError:
-    ep = 100
+    ep = 3000
 
 # paths to directories
 METAGRAPH_DIR = "../Results/{}".format(dirr)
@@ -266,6 +266,10 @@ if __name__ == '__main__':
             print('acc=', acc)
             AUC = roc_auc_score(joined['target'].tolist(), joined['score'].tolist())
             print('AUC=', AUC)
+
+            if epoch > 99 and ave_val_loss >= np.mean(losslist[-21:-1]):
+                print("\nEarly stop criteria met @ epoch: ", epoch)
+                break
 
     print('\nBest model @ epoch: ', best_epoch)
 
