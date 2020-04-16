@@ -244,7 +244,7 @@ if __name__ == '__main__':
             joined = joined.groupby(['patient']).mean()
             joined = joined.round({'prediction': 0, 'target': 0})
             if best_epoch == epoch:
-                joined.to_csv('{}/best_validation_patient.csv'.format(out_dir), index=False)
+                joined.to_csv('{}/best_validation_patient.csv'.format(out_dir), index=True)
 
             print("\nPer patient metrics: ")
             TP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 1)].shape[0]
@@ -311,6 +311,7 @@ if __name__ == '__main__':
         })
         image_joined.to_csv('{}/test_image.csv'.format(out_dir), index=False)
 
+        print("\nPer image metrics: ")
         TP = ((predlist == 1) & (targetlist == 1)).sum()
         TN = ((predlist == 0) & (targetlist == 0)).sum()
         FN = ((predlist == 0) & (targetlist == 1)).sum()
@@ -374,14 +375,13 @@ if __name__ == '__main__':
 
         joined = joined.groupby(['patient']).mean()
         joined = joined.round({'prediction': 0, 'target': 0})
-        joined.to_csv('{}/test_patient.csv'.format(out_dir), index=False)
+        joined.to_csv('{}/test_patient.csv'.format(out_dir), index=True)
 
-        print("Per patient metrics: ")
+        print("\nPer patient metrics: ")
         TP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 1)].shape[0]
         TN = joined.loc[(joined['prediction'] == 0) & (joined['target'] == 0)].shape[0]
         FN = joined.loc[(joined['prediction'] == 0) & (joined['target'] == 1)].shape[0]
         FP = joined.loc[(joined['prediction'] == 1) & (joined['target'] == 0)].shape[0]
-        print("Per image metrics: ")
         print('TP=', TP, 'TN=', TN, 'FN=', FN, 'FP=', FP)
         print('TP+FP=', TP + FP)
         if (TP + FP) != 0:
@@ -420,7 +420,7 @@ if __name__ == '__main__':
             y = f_score * x / (2 * x - f_score)
             l, = plt.plot(x[y >= 0], y[y >= 0], color='gray', alpha=0.2)
             plt.annotate('f1={0:0.1f}'.format(f_score), xy=(0.9, y[45] + 0.02))
-        precision, recall, _ = precision_recall_curve(targetlist, scorelist)
+        precision, recall, _ = precision_recall_curve(joined['target'].tolist(), joined['score'].tolist())
         plt.step(recall, precision, color='b', alpha=0.2,
                  where='post')
         plt.fill_between(recall, precision, step='post', alpha=0.2,
