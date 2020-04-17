@@ -147,7 +147,8 @@ if __name__ == '__main__':
             data, target = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda')
             optimizer.zero_grad()
             if md in ['inception_pt', 'googlenet_pt', 'inception', 'googlenet']:
-                output = model(data).logits
+                output = model(data)
+                output = output.logits
             else:
                 output = model(data)
             loss_fn = nn.CrossEntropyLoss()
@@ -177,7 +178,8 @@ if __name__ == '__main__':
                 data, target, patient, impath = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda'), \
                                                 batch_samples['patient'], batch_samples['path']
                 if md in ['inception_pt', 'googlenet_pt', 'inception', 'googlenet']:
-                    output = model(data).logits
+                    output = model(data)
+                    output = output.logits
                 else:
                     output = model(data)
 
@@ -287,6 +289,7 @@ if __name__ == '__main__':
                                             batch_samples['patient'], batch_samples['path']
             if md in ['inception_pt', 'googlenet_pt', 'inception', 'googlenet']:
                 output = model(data).logits
+                output = output.logits
             else:
                 output = model(data)
             loss_fn = nn.CrossEntropyLoss()
