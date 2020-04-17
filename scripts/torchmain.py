@@ -179,7 +179,7 @@ if __name__ == '__main__':
     test_loader = DataLoader(tes, batch_size=bs, drop_last=False, shuffle=False)
 
     model = modeldict(md)
-    if 'vgg' or 'alex' in md:
+    if 'vgg' in md or 'alex' in md:
         number_features = model.classifier[6].in_features
         features = list(model.classifier.children())[:-1]  # Remove last layer
         features.extend([torch.nn.Linear(number_features, 2)])
@@ -191,7 +191,7 @@ if __name__ == '__main__':
         model.classifier = torch.nn.Sequential(*features)
     elif 'dense' in md:
         model.classifier = nn.Linear(model.classifier.in_features, 2)
-    elif 'mobile' or 'mnas' in md:
+    elif 'mobile' in md or 'mnas' in md:
         number_features = model.classifier[1].in_features
         features = list(model.classifier.children())[:-1]  # Remove last layer
         features.extend([torch.nn.Linear(number_features, 2)])
