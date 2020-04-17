@@ -25,44 +25,17 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-modeldict = {'resnet18_pt': models.resnet18(pretrained=True).cuda(),
-             'alexnet_pt': models.alexnet(pretrained=True).cuda(),
-             'squeezenet_pt': models.squeezenet1_0(pretrained=True).cuda(),
-             'vgg16_pt': models.vgg16(pretrained=True).cuda(),
-             'densenet_pt': models.densenet161(pretrained=True).cuda(),
-             'inception_pt': models.inception_v3(pretrained=True).cuda(),
-             'googlenet_pt': models.googlenet(pretrained=True).cuda(),
-             'shufflenet_pt': models.shufflenet_v2_x1_0(pretrained=True).cuda(),
-             'mobilenet_pt': models.mobilenet_v2(pretrained=True).cuda(),
-             'resnext50_32x4d_pt': models.resnext50_32x4d(pretrained=True).cuda(),
-             'wide_resnet50_2_pt': models.wide_resnet50_2(pretrained=True).cuda(),
-             'mnasnet_pt': models.mnasnet1_0(pretrained=True).cuda(),
-             'resnet18': models.resnet18(pretrained=False).cuda(),
-             'alexnet': models.alexnet(pretrained=False).cuda(),
-             'squeezenet': models.squeezenet1_0(pretrained=False).cuda(),
-             'vgg16': models.vgg16(pretrained=False).cuda(),
-             'densenet': models.densenet161(pretrained=False).cuda(),
-             'inception': models.inception_v3(pretrained=False).cuda(),
-             'googlenet': models.googlenet(pretrained=False).cuda(),
-             'shufflenet': models.shufflenet_v2_x1_0(pretrained=False).cuda(),
-             'mobilenet': models.mobilenet_v2(pretrained=False).cuda(),
-             'resnext50_32x4d': models.resnext50_32x4d(pretrained=False).cuda(),
-             'wide_resnet50_2': models.wide_resnet50_2(pretrained=False).cuda(),
-             'mnasnet': models.mnasnet1_0(pretrained=False).cuda()
-             }
-
-normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                 std=[0.229, 0.224, 0.225])
-
 train_transformer = transforms.Compose([
     transforms.ColorJitter(brightness=0.35, contrast=0.5, saturation=0.5, hue=0.35),
     transforms.ToTensor(),
-    normalize
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
 ])
 
 val_transformer = transforms.Compose([
     transforms.ToTensor(),
-    normalize
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
 ])
 
 
@@ -91,31 +64,103 @@ class DataSet(Dataset):
         return sample
 
 
-dirr = sys.argv[1]  # output directory
-bs = sys.argv[2]    # batch size
-bs = int(bs)
-md = sys.argv[3]    # model to use
-
-try:
-    ep = sys.argv[4]  # epochs to train
-    ep = int(ep)
-except IndexError:
-    ep = 3000
-
-# paths to directories
-METAGRAPH_DIR = "../Results/{}".format(dirr)
-data_dir = "../Results/{}/data".format(dirr)
-out_dir = "../Results/{}/out".format(dirr)
-
-# make directories if not exist
-for DIR in (METAGRAPH_DIR, data_dir, out_dir):
-    try:
-        os.mkdir(DIR)
-    except FileExistsError:
-        pass
+modeldict = {'alexnet_pt': models.alexnet(pretrained=True),
+             'alexnet': models.alexnet(pretrained=False),
+             'vgg11_pt': models.vgg11(pretrained=True),
+             'vgg11': models.vgg11(pretrained=False),
+             'vgg11bn_pt': models.vgg11_bn(pretrained=True),
+             'vgg11bn': models.vgg11_bn(pretrained=False),
+             'vgg13_pt': models.vgg13(pretrained=True),
+             'vgg13': models.vgg13(pretrained=False),
+             'vgg13bn_pt': models.vgg13_bn(pretrained=True),
+             'vgg13bn': models.vgg13_bn(pretrained=False),
+             'vgg16_pt': models.vgg16(pretrained=True),
+             'vgg16': models.vgg16(pretrained=False),
+             'vgg16bn_pt': models.vgg16_bn(pretrained=True),
+             'vgg16bn': models.vgg16_bn(pretrained=False),
+             'vgg19_pt': models.vgg19(pretrained=True),
+             'vgg19': models.vgg19(pretrained=False),
+             'vgg19bn_pt': models.vgg19_bn(pretrained=True),
+             'vgg19bn': models.vgg19_bn(pretrained=False),
+             'resnet18': models.resnet18(pretrained=False),
+             'resnet18_pt': models.resnet18(pretrained=True),
+             'resnet34': models.resnet34(pretrained=False),
+             'resnet34_pt': models.resnet34(pretrained=True),
+             'resnet50': models.resnet50(pretrained=False),
+             'resnet50_pt': models.resnet50(pretrained=True),
+             'resnet101': models.resnet101(pretrained=False),
+             'resnet101_pt': models.resnet101(pretrained=True),
+             'resnet152': models.resnet152(pretrained=False),
+             'resnet152_pt': models.resnet152(pretrained=True),
+             'squeezenet10_pt': models.squeezenet1_0(pretrained=True),
+             'squeezenet10': models.squeezenet1_0(pretrained=False),
+             'squeezenet11_pt': models.squeezenet1_1(pretrained=True),
+             'squeezenet11': models.squeezenet1_1(pretrained=False),
+             'densenet121_pt': models.densenet121(pretrained=True),
+             'densenet121': models.densenet121(pretrained=False),
+             'densenet161_pt': models.densenet161(pretrained=True),
+             'densenet161': models.densenet161(pretrained=False),
+             'densenet169_pt': models.densenet169(pretrained=True),
+             'densenet169': models.densenet169(pretrained=False),
+             'densenet201_pt': models.densenet201(pretrained=True),
+             'densenet201': models.densenet201(pretrained=False),
+             'inception_pt': models.inception_v3(pretrained=True, aux_logits=False),
+             'inception': models.inception_v3(pretrained=False, aux_logits=False),
+             'googlenet_pt': models.googlenet(pretrained=True, aux_logits=False),
+             'googlenet': models.googlenet(pretrained=False, aux_logits=False),
+             'shufflenet05_pt': models.shufflenet_v2_x0_5(pretrained=True),
+             'shufflenet05': models.shufflenet_v2_x0_5(pretrained=False),
+             'shufflenet10_pt': models.shufflenet_v2_x1_0(pretrained=True),
+             'shufflenet10': models.shufflenet_v2_x1_0(pretrained=False),
+             'shufflenet15_pt': models.shufflenet_v2_x1_5(pretrained=True),
+             'shufflenet15': models.shufflenet_v2_x1_5(pretrained=False),
+             'shufflenet20_pt': models.shufflenet_v2_x2_0(pretrained=True),
+             'shufflenet20': models.shufflenet_v2_x2_0(pretrained=False),
+             'mobilenet_pt': models.mobilenet_v2(pretrained=True),
+             'mobilenet': models.mobilenet_v2(pretrained=False),
+             'resnext50_32x4d_pt': models.resnext50_32x4d(pretrained=True),
+             'resnext50_32x4d': models.resnext50_32x4d(pretrained=False),
+             'resnext101_32x8d_pt': models.resnext101_32x8d(pretrained=True),
+             'resnext101_32x8d': models.resnext101_32x8d(pretrained=False),
+             'wide_resnet50_2_pt': models.wide_resnet50_2(pretrained=True),
+             'wide_resnet50_2': models.wide_resnet50_2(pretrained=False),
+             'wide_resnet101_2_pt': models.wide_resnet101_2(pretrained=True),
+             'wide_resnet101_2': models.wide_resnet101_2(pretrained=False),
+             'mnasnet05_pt': models.mnasnet0_5(pretrained=True),
+             'mnasnet05': models.mnasnet0_5(pretrained=False),
+             'mnasnet075_pt': models.mnasnet0_75(pretrained=True),
+             'mnasnet075': models.mnasnet0_75(pretrained=False),
+             'mnasnet10_pt': models.mnasnet1_0(pretrained=True),
+             'mnasnet10': models.mnasnet1_0(pretrained=False),
+             'mnasnet13_pt': models.mnasnet1_3(pretrained=True),
+             'mnasnet13': models.mnasnet1_3(pretrained=False)
+             }
 
 
 if __name__ == '__main__':
+    dirr = sys.argv[1]  # output directory
+    bs = sys.argv[2]  # batch size
+    bs = int(bs)
+    md = sys.argv[3]  # model to use
+
+    try:
+        ep = sys.argv[4]  # epochs to train
+        ep = int(ep)
+    except IndexError:
+        ep = 3000
+
+    # paths to directories
+    METAGRAPH_DIR = "../Results/{}".format(dirr)
+    data_dir = "../Results/{}/data".format(dirr)
+    out_dir = "../Results/{}/out".format(dirr)
+
+    # make directories if not exist
+    for DIR in (METAGRAPH_DIR, data_dir, out_dir):
+        try:
+            os.mkdir(DIR)
+        except FileExistsError:
+            pass
+
     try:
         trs = DataSet(str(data_dir + '/tr_sample.csv'), transform=train_transformer)
         tes = DataSet(str(data_dir + '/te_sample.csv'), transform=val_transformer)
@@ -131,8 +176,28 @@ if __name__ == '__main__':
     test_loader = DataLoader(tes, batch_size=bs, drop_last=False, shuffle=False)
 
     model = modeldict[md]
+    if 'vgg' or 'alex' in md:
+        number_features = model.classifier[6].in_features
+        features = list(model.classifier.children())[:-1]  # Remove last layer
+        features.extend([torch.nn.Linear(number_features, 2)])
+        model.classifier = torch.nn.Sequential(*features)
+    elif 'squeeze' in md:
+        number_features = model.classifier[1].in_features
+        features = list(model.classifier.children())
+        features[1] = nn.Conv2d(number_features, 2, kernel_size=1)
+        model.classifier = torch.nn.Sequential(*features)
+    elif 'dense' in md:
+        model.classifier = nn.Linear(model.classifier.in_features, 2)
+    elif 'mobile' or 'mnas' in md:
+        number_features = model.classifier[1].in_features
+        features = list(model.classifier.children())[:-1]  # Remove last layer
+        features.extend([torch.nn.Linear(number_features, 2)])
+        model.classifier = torch.nn.Sequential(*features)
+    else:
+        model.fc = nn.Linear(model.fc.in_features, 2)
+
+    model = model.cuda()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
-    # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)
 
     # train
     best_epoch = -1
@@ -146,11 +211,7 @@ if __name__ == '__main__':
         for batch_index, batch_samples in enumerate(train_loader):
             data, target = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda')
             optimizer.zero_grad()
-            if md in ['inception_pt', 'googlenet_pt', 'inception', 'googlenet']:
-                output = model(data)
-                output = output.logits
-            else:
-                output = model(data)
+            output = model(data)
             loss_fn = nn.CrossEntropyLoss()
             loss = loss_fn(output, target.long())
             train_loss += loss
@@ -177,12 +238,7 @@ if __name__ == '__main__':
             for batch_index, batch_samples in enumerate(val_loader):
                 data, target, patient, impath = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda'), \
                                                 batch_samples['patient'], batch_samples['path']
-                if md in ['inception_pt', 'googlenet_pt', 'inception', 'googlenet']:
-                    output = model(data)
-                    output = output.logits
-                else:
-                    output = model(data)
-
+                output = model(data)
                 loss_fn = nn.CrossEntropyLoss()
                 loss = loss_fn(output, target.long())
                 val_loss += loss
@@ -215,6 +271,7 @@ if __name__ == '__main__':
             print('\nValidation set: Average loss: {:.4f}, Image Accuracy: {}/{} ({:.0f}%)\n'.format(
                 ave_val_loss, correct, len(val_loader.dataset),
                 100.0 * correct / len(val_loader.dataset)), flush=True)
+
             TP = ((predlist == 1) & (targetlist == 1)).sum()
             TN = ((predlist == 0) & (targetlist == 0)).sum()
             FN = ((predlist == 0) & (targetlist == 1)).sum()
@@ -287,11 +344,8 @@ if __name__ == '__main__':
         for batch_index, batch_samples in enumerate(test_loader):
             data, target, patient, impath = batch_samples['img'].to('cuda'), batch_samples['label'].to('cuda'), \
                                             batch_samples['patient'], batch_samples['path']
-            if md in ['inception_pt', 'googlenet_pt', 'inception', 'googlenet']:
-                output = model(data).logits
-                output = output.logits
-            else:
-                output = model(data)
+
+            output = model(data)
             loss_fn = nn.CrossEntropyLoss()
             loss = loss_fn(output, target.long())
             test_loss += loss
