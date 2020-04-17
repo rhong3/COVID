@@ -64,77 +64,80 @@ class DataSet(Dataset):
         return sample
 
 
-modeldict = {'alexnet_pt': models.alexnet(pretrained=True),
-             'alexnet': models.alexnet(pretrained=False),
-             'vgg11_pt': models.vgg11(pretrained=True),
-             'vgg11': models.vgg11(pretrained=False),
-             'vgg11bn_pt': models.vgg11_bn(pretrained=True),
-             'vgg11bn': models.vgg11_bn(pretrained=False),
-             'vgg13_pt': models.vgg13(pretrained=True),
-             'vgg13': models.vgg13(pretrained=False),
-             'vgg13bn_pt': models.vgg13_bn(pretrained=True),
-             'vgg13bn': models.vgg13_bn(pretrained=False),
-             'vgg16_pt': models.vgg16(pretrained=True),
-             'vgg16': models.vgg16(pretrained=False),
-             'vgg16bn_pt': models.vgg16_bn(pretrained=True),
-             'vgg16bn': models.vgg16_bn(pretrained=False),
-             'vgg19_pt': models.vgg19(pretrained=True),
-             'vgg19': models.vgg19(pretrained=False),
-             'vgg19bn_pt': models.vgg19_bn(pretrained=True),
-             'vgg19bn': models.vgg19_bn(pretrained=False),
-             'resnet18': models.resnet18(pretrained=False),
-             'resnet18_pt': models.resnet18(pretrained=True),
-             'resnet34': models.resnet34(pretrained=False),
-             'resnet34_pt': models.resnet34(pretrained=True),
-             'resnet50': models.resnet50(pretrained=False),
-             'resnet50_pt': models.resnet50(pretrained=True),
-             'resnet101': models.resnet101(pretrained=False),
-             'resnet101_pt': models.resnet101(pretrained=True),
-             'resnet152': models.resnet152(pretrained=False),
-             'resnet152_pt': models.resnet152(pretrained=True),
-             'squeezenet10_pt': models.squeezenet1_0(pretrained=True),
-             'squeezenet10': models.squeezenet1_0(pretrained=False),
-             'squeezenet11_pt': models.squeezenet1_1(pretrained=True),
-             'squeezenet11': models.squeezenet1_1(pretrained=False),
-             'densenet121_pt': models.densenet121(pretrained=True),
-             'densenet121': models.densenet121(pretrained=False),
-             'densenet161_pt': models.densenet161(pretrained=True),
-             'densenet161': models.densenet161(pretrained=False),
-             'densenet169_pt': models.densenet169(pretrained=True),
-             'densenet169': models.densenet169(pretrained=False),
-             'densenet201_pt': models.densenet201(pretrained=True),
-             'densenet201': models.densenet201(pretrained=False),
-             'inception_pt': models.inception_v3(pretrained=True, aux_logits=False),
-             'inception': models.inception_v3(pretrained=False, aux_logits=False),
-             'googlenet_pt': models.googlenet(pretrained=True, aux_logits=False),
-             'googlenet': models.googlenet(pretrained=False, aux_logits=False),
-             'shufflenet05_pt': models.shufflenet_v2_x0_5(pretrained=True),
-             'shufflenet05': models.shufflenet_v2_x0_5(pretrained=False),
-             'shufflenet10_pt': models.shufflenet_v2_x1_0(pretrained=True),
-             'shufflenet10': models.shufflenet_v2_x1_0(pretrained=False),
-             'shufflenet15_pt': models.shufflenet_v2_x1_5(pretrained=True),
-             'shufflenet15': models.shufflenet_v2_x1_5(pretrained=False),
-             'shufflenet20_pt': models.shufflenet_v2_x2_0(pretrained=True),
-             'shufflenet20': models.shufflenet_v2_x2_0(pretrained=False),
-             'mobilenet_pt': models.mobilenet_v2(pretrained=True),
-             'mobilenet': models.mobilenet_v2(pretrained=False),
-             'resnext50_32x4d_pt': models.resnext50_32x4d(pretrained=True),
-             'resnext50_32x4d': models.resnext50_32x4d(pretrained=False),
-             'resnext101_32x8d_pt': models.resnext101_32x8d(pretrained=True),
-             'resnext101_32x8d': models.resnext101_32x8d(pretrained=False),
-             'wide_resnet50_2_pt': models.wide_resnet50_2(pretrained=True),
-             'wide_resnet50_2': models.wide_resnet50_2(pretrained=False),
-             'wide_resnet101_2_pt': models.wide_resnet101_2(pretrained=True),
-             'wide_resnet101_2': models.wide_resnet101_2(pretrained=False),
-             'mnasnet05_pt': models.mnasnet0_5(pretrained=True),
-             'mnasnet05': models.mnasnet0_5(pretrained=False),
-             'mnasnet075_pt': models.mnasnet0_75(pretrained=True),
-             'mnasnet075': models.mnasnet0_75(pretrained=False),
-             'mnasnet10_pt': models.mnasnet1_0(pretrained=True),
-             'mnasnet10': models.mnasnet1_0(pretrained=False),
-             'mnasnet13_pt': models.mnasnet1_3(pretrained=True),
-             'mnasnet13': models.mnasnet1_3(pretrained=False)
-             }
+def modeldict(mmd):
+    if mmd =='alexnet_pt': out_model = models.alexnet(pretrained=True)
+    elif mmd == 'alexnet': out_model = models.alexnet(pretrained=False)
+    elif mmd == 'vgg11_pt': out_model = models.vgg11(pretrained=True)
+    elif mmd == 'vgg11': out_model = models.vgg11(pretrained=False)
+    elif mmd == 'vgg11bn_pt': out_model = models.vgg11_bn(pretrained=True)
+    elif mmd == 'vgg11bn': out_model = models.vgg11_bn(pretrained=False)
+    elif mmd == 'vgg13_pt': out_model = models.vgg13(pretrained=True)
+    elif mmd == 'vgg13': out_model = models.vgg13(pretrained=False)
+    elif mmd == 'vgg13bn_pt': out_model = models.vgg13_bn(pretrained=True)
+    elif mmd == 'vgg13bn': out_model = models.vgg13_bn(pretrained=False)
+    elif mmd == 'vgg16_pt': out_model = models.vgg16(pretrained=True)
+    elif mmd == 'vgg16': out_model = models.vgg16(pretrained=False)
+    elif mmd == 'vgg16bn_pt': out_model = models.vgg16_bn(pretrained=True)
+    elif mmd == 'vgg16bn': out_model = models.vgg16_bn(pretrained=False)
+    elif mmd == 'vgg19_pt': out_model = models.vgg19(pretrained=True)
+    elif mmd == 'vgg19': out_model = models.vgg19(pretrained=False)
+    elif mmd == 'vgg19bn_pt': out_model = models.vgg19_bn(pretrained=True)
+    elif mmd == 'vgg19bn': out_model = models.vgg19_bn(pretrained=False)
+    elif mmd == 'resnet18': out_model = models.resnet18(pretrained=False)
+    elif mmd == 'resnet18_pt': out_model = models.resnet18(pretrained=True)
+    elif mmd == 'resnet34': out_model = models.resnet34(pretrained=False)
+    elif mmd == 'resnet34_pt': out_model = models.resnet34(pretrained=True)
+    elif mmd == 'resnet50': out_model = models.resnet50(pretrained=False)
+    elif mmd == 'resnet50_pt': out_model = models.resnet50(pretrained=True)
+    elif mmd == 'resnet101': out_model = models.resnet101(pretrained=False)
+    elif mmd == 'resnet101_pt': out_model = models.resnet101(pretrained=True)
+    elif mmd == 'resnet152': out_model = models.resnet152(pretrained=False)
+    elif mmd == 'resnet152_pt': out_model = models.resnet152(pretrained=True)
+    elif mmd == 'squeezenet10_pt': out_model = models.squeezenet1_0(pretrained=True)
+    elif mmd == 'squeezenet10': out_model = models.squeezenet1_0(pretrained=False)
+    elif mmd == 'squeezenet11_pt': out_model = models.squeezenet1_1(pretrained=True)
+    elif mmd == 'squeezenet11': out_model = models.squeezenet1_1(pretrained=False)
+    elif mmd == 'densenet121_pt': out_model = models.densenet121(pretrained=True)
+    elif mmd == 'densenet121': out_model = models.densenet121(pretrained=False)
+    elif mmd == 'densenet161_pt': out_model = models.densenet161(pretrained=True)
+    elif mmd == 'densenet161': out_model = models.densenet161(pretrained=False)
+    elif mmd == 'densenet169_pt': out_model = models.densenet169(pretrained=True)
+    elif mmd == 'densenet169': out_model = models.densenet169(pretrained=False)
+    elif mmd == 'densenet201_pt': out_model = models.densenet201(pretrained=True)
+    elif mmd == 'densenet201': out_model = models.densenet201(pretrained=False)
+    elif mmd == 'inception_pt': out_model = models.inception_v3(pretrained=True, aux_logits=False)
+    elif mmd == 'inception': out_model = models.inception_v3(pretrained=False, aux_logits=False)
+    elif mmd == 'googlenet_pt': out_model = models.googlenet(pretrained=True, aux_logits=False)
+    elif mmd == 'googlenet': out_model = models.googlenet(pretrained=False, aux_logits=False)
+    elif mmd == 'shufflenet05_pt': out_model = models.shufflenet_v2_x0_5(pretrained=True)
+    elif mmd == 'shufflenet05': out_model = models.shufflenet_v2_x0_5(pretrained=False)
+    elif mmd == 'shufflenet10_pt': out_model = models.shufflenet_v2_x1_0(pretrained=True)
+    elif mmd == 'shufflenet10': out_model = models.shufflenet_v2_x1_0(pretrained=False)
+    elif mmd == 'shufflenet20_pt': out_model = models.shufflenet_v2_x2_0(pretrained=True)
+    elif mmd == 'shufflenet20': out_model = models.shufflenet_v2_x2_0(pretrained=False)
+    elif mmd == 'mobilenet_pt': out_model = models.mobilenet_v2(pretrained=True)
+    elif mmd == 'mobilenet': out_model = models.mobilenet_v2(pretrained=False)
+    elif mmd == 'resnext50_32x4d_pt': out_model = models.resnext50_32x4d(pretrained=True)
+    elif mmd == 'resnext50_32x4d': out_model = models.resnext50_32x4d(pretrained=False)
+    elif mmd == 'resnext101_32x8d_pt': out_model = models.resnext101_32x8d(pretrained=True)
+    elif mmd == 'resnext101_32x8d': out_model = models.resnext101_32x8d(pretrained=False)
+    elif mmd == 'wide_resnet50_2_pt': out_model = models.wide_resnet50_2(pretrained=True)
+    elif mmd == 'wide_resnet50_2': out_model = models.wide_resnet50_2(pretrained=False)
+    elif mmd == 'wide_resnet101_2_pt': out_model = models.wide_resnet101_2(pretrained=True)
+    elif mmd == 'wide_resnet101_2': out_model = models.wide_resnet101_2(pretrained=False)
+    elif mmd == 'mnasnet05_pt': out_model = models.mnasnet0_5(pretrained=True)
+    elif mmd == 'mnasnet05': out_model = models.mnasnet0_5(pretrained=False)
+    elif mmd == 'mnasnet075_pt': out_model = models.mnasnet0_75(pretrained=True)
+    elif mmd == 'mnasnet075': out_model = models.mnasnet0_75(pretrained=False)
+    elif mmd == 'mnasnet10_pt': out_model = models.mnasnet1_0(pretrained=True)
+    elif mmd == 'mnasnet10': out_model = models.mnasnet1_0(pretrained=False)
+    elif mmd == 'mnasnet13_pt': out_model = models.mnasnet1_3(pretrained=True)
+    elif mmd == 'mnasnet13': out_model = models.mnasnet1_3(pretrained=False)
+    else:
+        out_model = None
+        print('Invalid model name. Terminated.')
+        exit(0)
+    return out_model
 
 
 if __name__ == '__main__':
@@ -175,7 +178,7 @@ if __name__ == '__main__':
     val_loader = DataLoader(vas, batch_size=bs, drop_last=False, shuffle=False)
     test_loader = DataLoader(tes, batch_size=bs, drop_last=False, shuffle=False)
 
-    model = modeldict[md]
+    model = modeldict(md)
     if 'vgg' or 'alex' in md:
         number_features = model.classifier[6].in_features
         features = list(model.classifier.children())[:-1]  # Remove last layer
