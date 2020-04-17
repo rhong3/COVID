@@ -257,7 +257,7 @@ if __name__ == '__main__':
             ave_val_loss = val_loss.cpu().numpy() / len(val_loader.dataset)
             losslist = np.append(losslist, ave_val_loss)
 
-            if epoch != 0 and ave_val_loss == min(losslist):
+            if ave_val_loss == min(losslist):
                 best_epoch = epoch
                 print('Temporary best model found @ epoch {}! Saving...'.format(epoch))
                 torch.save(model, '{}/model.pth'.format(METAGRAPH_DIR))
