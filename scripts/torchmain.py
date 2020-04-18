@@ -185,10 +185,7 @@ if __name__ == '__main__':
         features.extend([torch.nn.Linear(number_features, 2)])
         model.classifier = torch.nn.Sequential(*features)
     elif 'squeeze' in md:
-        number_features = model.classifier[1].in_features
-        features = list(model.classifier.children())
-        features[1] = nn.Conv2d(number_features, 2, kernel_size=1)
-        model.classifier = torch.nn.Sequential(*features)
+        model.num_classes = 2
     elif 'dense' in md:
         model.classifier = nn.Linear(model.classifier.in_features, 2)
     elif 'mobile' in md or 'mnas' in md:
