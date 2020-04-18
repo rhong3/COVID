@@ -113,7 +113,6 @@ def modeldict(mmd):
     elif mmd == 'shufflenet05': out_model = models.shufflenet_v2_x0_5(pretrained=False)
     elif mmd == 'shufflenet10_pt': out_model = models.shufflenet_v2_x1_0(pretrained=True)
     elif mmd == 'shufflenet10': out_model = models.shufflenet_v2_x1_0(pretrained=False)
-    elif mmd == 'shufflenet20_pt': out_model = models.shufflenet_v2_x2_0(pretrained=True)
     elif mmd == 'shufflenet20': out_model = models.shufflenet_v2_x2_0(pretrained=False)
     elif mmd == 'mobilenet_pt': out_model = models.mobilenet_v2(pretrained=True)
     elif mmd == 'mobilenet': out_model = models.mobilenet_v2(pretrained=False)
@@ -127,11 +126,9 @@ def modeldict(mmd):
     elif mmd == 'wide_resnet101_2': out_model = models.wide_resnet101_2(pretrained=False)
     elif mmd == 'mnasnet05_pt': out_model = models.mnasnet0_5(pretrained=True)
     elif mmd == 'mnasnet05': out_model = models.mnasnet0_5(pretrained=False)
-    elif mmd == 'mnasnet075_pt': out_model = models.mnasnet0_75(pretrained=True)
     elif mmd == 'mnasnet075': out_model = models.mnasnet0_75(pretrained=False)
     elif mmd == 'mnasnet10_pt': out_model = models.mnasnet1_0(pretrained=True)
     elif mmd == 'mnasnet10': out_model = models.mnasnet1_0(pretrained=False)
-    elif mmd == 'mnasnet13_pt': out_model = models.mnasnet1_3(pretrained=True)
     elif mmd == 'mnasnet13': out_model = models.mnasnet1_3(pretrained=False)
     else:
         out_model = None
