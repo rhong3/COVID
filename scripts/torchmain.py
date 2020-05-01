@@ -487,3 +487,4 @@ if __name__ == '__main__':
         plt.xlim([0.0, 1.0])
         plt.title('COVID PRC: AP={:0.5f}; Accu={}'.format(average_precision, acc))
         plt.savefig("../Results/{}/out/PRC_patient.png".format(dirr))
+
